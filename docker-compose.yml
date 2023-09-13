@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
 
-  lets-stock-mongo:
+  lets-stock-postgres:
     image: postgres:13
     ports:
       - 5432:5432

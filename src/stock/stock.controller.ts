@@ -7,8 +7,7 @@ export class StockController {
   constructor(private stockService: StockService) {}
 
   @Post('create')
-  create(@Body() dto: StockDto): string {
-    console.log(dto);
-    return this.stockService.create();
+  create(@Body() dto: StockDto) {
+    return this.stockService.create(dto);
   }
 }
