@@ -8,11 +8,7 @@ export class StockService {
 
   async create(dto: StockDto) {
     const stock = await this.prisma.stock.create({
-      data: {
-        code: dto.code,
-        tradeCategory: dto.tradeCategory,
-        tradedAt: dto.tradedAt,
-      },
+      data: dto,
     });
     return stock;
   }

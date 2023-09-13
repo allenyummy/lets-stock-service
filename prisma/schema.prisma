@@ -17,10 +17,14 @@ model User {
 }
 
 model Stock {
-  id            Int      @id @default(autoincrement())
-  code          String
-  tradeCategory String
-  tradedAt      DateTime
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id             Int      @id @default(autoincrement())
+  code           String
+  share          Int
+  tradeCategory  String
+  handlingFees   Int
+  transactionTax Int
+  securitiesFirm String
+  tradedAt       DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
