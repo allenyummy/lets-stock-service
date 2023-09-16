@@ -6,6 +6,10 @@ import {
   Put,
   Delete,
   UseGuards,
+  Param,
+  ParseIntPipe,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { StockService } from './stock.service';
 import { StockDto, PartialStockDto } from './dto';
@@ -32,8 +36,13 @@ export class StockController {
     return this.stockService.update();
   }
 
-  @Delete('records')
-  delete() {
-    return this.stockService.delete();
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete('records/:id')
+  deleteByUserId(
+    @GetUser('id') userId: number,
+    @Param('id', ParseIntPipe) stockId: number,
+    @Body() dto: PartialStockDto,
+  ) {
+    return this.stockService.delete(userId, stockId, dto);
   }
 }

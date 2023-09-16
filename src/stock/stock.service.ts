@@ -1,4 +1,9 @@
-import { Injectable, NotImplementedException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+  NotImplementedException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { StockDto, PartialStockDto } from './dto';
 
@@ -29,6 +34,7 @@ export class StockService {
         },
       ],
       select: {
+        id: true,
         userId: true,
         code: true,
         share: true,
@@ -56,7 +62,24 @@ export class StockService {
     throw new NotImplementedException();
   }
 
-  async delete() {
-    throw new NotImplementedException();
+  async delete(userId: number, stockId: number, dto: PartialStockDto) {
+    const stock = await this.prismaService.stock.findUnique({
+      where: {
+        id: stockId,
+        userId: userId,
+        code: dto.code,
+        tradeCategory: dto.tradeCategory,
+        securitiesFirm: dto.securitiesFirm,
+        tradedAt: dto.tradedAt,
+      },
+    });
+    if (!stock || stock.userId !== userId) {
+      throw new ForbiddenException('Access to resources denied');
+    }
+    await this.prismaService.stock.delete({
+      where: {
+        id: stockId,
+      },
+    });
   }
 }
