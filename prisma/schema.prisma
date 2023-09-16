@@ -19,7 +19,7 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  // stocks Stock[]
+  stocks Stock[]
 
   @@map("users")
 }
@@ -36,8 +36,8 @@ model Stock {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  // userId Int
-  // user   User @relation(fields: [userId], references: [id])
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
 
-  // @@map("stocks")
+  @@map("stocks")
 }

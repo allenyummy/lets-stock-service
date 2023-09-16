@@ -6,9 +6,10 @@ import { StockDto, PartialStockDto } from './dto';
 export class StockService {
   constructor(private prismaService: PrismaService) {}
 
-  async find(dto: PartialStockDto) {
+  async find(userId: number, dto: PartialStockDto) {
     const stocks = await this.prismaService.stock.findMany({
       where: {
+        userId: userId,
         code: dto.code,
         tradeCategory: dto.tradeCategory,
         securitiesFirm: dto.securitiesFirm,
@@ -28,6 +29,7 @@ export class StockService {
         },
       ],
       select: {
+        userId: true,
         code: true,
         share: true,
         tradeCategory: true,
@@ -40,9 +42,12 @@ export class StockService {
     return stocks;
   }
 
-  async create(dto: StockDto) {
+  async create(userId: number, dto: StockDto) {
     const stock = await this.prismaService.stock.create({
-      data: dto,
+      data: {
+        userId,
+        ...dto,
+      },
     });
     return stock;
   }
