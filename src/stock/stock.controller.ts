@@ -1,7 +1,17 @@
-import { Controller, Body, Get, Post, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Get,
+  Post,
+  Put,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { StockService } from './stock.service';
 import { StockDto, PartialStockDto } from './dto';
+import { JwtGuard } from '../auth/guard';
 
+@UseGuards(JwtGuard)
 @Controller('v1/stock')
 export class StockController {
   constructor(private stockService: StockService) {}

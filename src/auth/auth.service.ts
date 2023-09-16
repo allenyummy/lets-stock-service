@@ -57,7 +57,7 @@ export class AuthService {
         },
       });
       const accessToken = this.getAccessToken(user.id, user.email);
-      return { accessToken };
+      return accessToken;
     } catch (error) {
       // console.error(error);
       throw new ForbiddenException('Credentials taken');
