@@ -3,7 +3,7 @@ import {
   Body,
   Get,
   Post,
-  Put,
+  Patch,
   Delete,
   UseGuards,
   Param,
@@ -31,9 +31,13 @@ export class StockController {
     return this.stockService.create(userId, dto);
   }
 
-  @Put('records')
-  update() {
-    return this.stockService.update();
+  @Patch('records/:id')
+  update(
+    @GetUser('id') userId: number,
+    @Param('id', ParseIntPipe) stockId: number,
+    @Body() dto: PartialStockDto,
+  ) {
+    return this.stockService.update(userId, stockId, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -41,8 +45,7 @@ export class StockController {
   deleteByUserId(
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) stockId: number,
-    @Body() dto: PartialStockDto,
   ) {
-    return this.stockService.delete(userId, stockId, dto);
+    return this.stockService.delete(userId, stockId);
   }
 }
