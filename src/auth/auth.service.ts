@@ -68,7 +68,7 @@ export class AuthService {
     userId: number,
     email: string,
   ): Promise<{ accessToken: string }> {
-    const ttl = '15m';
+    const ttl = this.configService.get('JWT_TTL');
     const secret = this.configService.get('JWT_SECRET');
     const payload = {
       sub: userId,
