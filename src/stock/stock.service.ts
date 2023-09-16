@@ -4,10 +4,10 @@ import { StockDto, PartialStockDto } from './dto';
 
 @Injectable()
 export class StockService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prismaService: PrismaService) {}
 
   async find(dto: PartialStockDto) {
-    const stocks = await this.prisma.stock.findMany({
+    const stocks = await this.prismaService.stock.findMany({
       where: {
         code: dto.code,
         tradeCategory: dto.tradeCategory,
@@ -41,7 +41,7 @@ export class StockService {
   }
 
   async create(dto: StockDto) {
-    const stock = await this.prisma.stock.create({
+    const stock = await this.prismaService.stock.create({
       data: dto,
     });
     return stock;
